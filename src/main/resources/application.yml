@@ -7,3 +7,10 @@ spring:
       url: jdbc:h2:mem:mybatis-test
       username: sa
       password:
+
+# MyBatis
+mybatis:
+  mapper-locations: mybatis-mapper/**/*.xml # mapper.xml ?? ??
+  configuration:
+    map-underscore-to-camel-case: true # model ???? camel case ??
+    ype-aliases-package: com.atoz_develop.mybatissample.model # ??? ?? ??? ? ??? alias ??
