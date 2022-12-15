@@ -1,0 +1,1 @@
+INSERT INTO Members (member_id, member_pw, member_name) values ('kimminji', 'pw', '김민지');
