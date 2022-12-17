@@ -4,7 +4,7 @@ spring:
       enabled: true
   datasource:
       generate-unique-name: false
-      url: jdbc:h2:mem:sk-internship-db
+      url: jdbc:h2:mem:sk-internship-db;MODE=MYSQL
       username: sa
       password:
 
@@ -14,4 +14,3 @@ mybatis:
   type-aliases-package: SKInternship.board.domain # 패키지 명을 생략할 수 있도록 alias 설정
   configuration:
     map-underscore-to-camel-case: true # model 프로퍼티 camel case 설정
-
