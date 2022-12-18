@@ -31,11 +31,13 @@ public class BoardController {
    */
   @GetMapping("/openBoardList.do")
   public String openBoardList(@ModelAttribute SearchDto searchDto,
+                              @SessionAttribute(name = "loginMember", required = false) MemberDto memberDto,
                               @RequestParam(required = false, defaultValue = "1") int pageNum, Model model) {
     log.info("게시판 목록 조회");
     PageInfo<Board> boardList = new PageInfo<>(boardService.findAll(searchDto, pageNum), 10);
     model.addAttribute("boardList", boardList);
     model.addAttribute("search", searchDto);
+    model.addAttribute("memberDto", memberDto);
     return "board/boardList";
   }
 
@@ -44,8 +46,9 @@ public class BoardController {
    * @return 게시물 작성 페이지
    */
   @GetMapping("/writeBoard.do")
-  public String openBoardWrite() {
+  public String openBoardWrite(@SessionAttribute(name = "loginMember", required = false) MemberDto memberDto, Model model) {
     log.info("게시물 작성 페이지");
+    model.addAttribute("memberDto", memberDto);
     return "board/boardWrite";
   }
 
@@ -70,10 +73,12 @@ public class BoardController {
    * @return 게시물 상세 조회 페이지
    */
   @GetMapping("/viewBoard.do")
-  public String viewBoard(@RequestParam Long id, Model model) {
+  public String viewBoard(@RequestParam Long id,
+                          @SessionAttribute(name = "loginMember", required = false) MemberDto memberDto, Model model) {
     log.info("게시물 상세 조회");
     BoardResponseDto responseDto = new BoardResponseDto(boardService.findById(id));
     model.addAttribute("board", responseDto);
+    model.addAttribute("memberDto", memberDto);
     return "/board/boardDetail";
   }
 
@@ -84,10 +89,13 @@ public class BoardController {
    * @return 게시물 수정 페이지
    */
   @GetMapping("/viewUpdateBoard.do")
-  public String updateBoard(@RequestParam Long id, Model model) {
+  public String updateBoard(@RequestParam Long id,
+                            @SessionAttribute(name = "loginMember", required = false) MemberDto memberDto,
+                            Model model) {
     log.info("게시물 수정 페이지");
     BoardResponseDto responseDto = new BoardResponseDto(boardService.findById(id));
     model.addAttribute("board", responseDto);
+    model.addAttribute("memberDto", memberDto);
     return "board/boardWrite";
   }
 

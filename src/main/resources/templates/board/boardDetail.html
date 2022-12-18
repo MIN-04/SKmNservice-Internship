@@ -18,8 +18,7 @@
                 <tbody>
                 <tr>
                     <th scope="row">등록일</th>
-                    <td>[[ ${board.createdAt} ]]</td>
-<!--                    <td th:text="${#temporals.format( board.createdAt, 'yyyy-MM-dd HH:mm' )}"></td>-->
+                    <td th:text="${#temporals.format( board.createdAt, 'yyyy-MM-dd HH:mm' )}"></td>
                 </tr>
                 <tr>
                     <th scope="row">제목</th>
@@ -38,11 +37,18 @@
                 </tr>
                 </tbody>
             </table>
-            <p class="btn_set">
-                <a th:href="@{/board/viewUpdateBoard.do( id=${board.id} )}" class="btns btn_bdr4 btn_mid">수정</a>
-                <button type="button" onclick="deleteBoard();" class="btns btn_bdr1 btn_mid">삭제</button>
-                <a th:href="@{/board/openBoardList.do}" class="btns btn_bdr3 btn_mid">뒤로</a>
-            </p>
+
+            <!--/* 버튼 */-->
+            <th:block th:if="${memberDto != null}">
+                <p class="btn_set">
+                    <a th:href="@{/board/viewUpdateBoard.do( id=${board.id} )}" class="btns btn_bdr4 btn_mid">수정</a>
+                    <button type="button" onclick="deleteBoard();" class="btns btn_bdr1 btn_mid">삭제</button>
+
+                </p>
+            </th:block>
+            <a th:href="@{/board/openBoardList.do}" class="btns btn_bdr3 btn_mid">뒤로</a>
+
+
         </section>
     </div> <!--/* .content */-->
 </th:block>

@@ -1,6 +1,5 @@
 package SKInternship.board.Repository;
 
-import SKInternship.board.controller.dto.BoardSearchRequestDto;
 import SKInternship.board.controller.dto.SearchDto;
 import SKInternship.board.domain.Board;
 import com.github.pagehelper.Page;

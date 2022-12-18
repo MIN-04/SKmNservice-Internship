@@ -10,8 +10,7 @@
                 <!--/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */-->
                 <input type="hidden" id="id" name="id" th:if="${board != null}" th:value="${board.id}" />
                 <!--/* 작성자 */-->
-                <input type="hidden" id="writer" name="writer" th:value="${board?.writer}" required/>
-<!--                <input type="hidden" id="writer" name="writer" th:value="${board?.writer}" required/>-->
+                <input type="hidden" id="writer" name="writer" th:value="${memberDto.loginId}" required/>
 
                 <table class="tb tb_row">
                     <colgroup>

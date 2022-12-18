@@ -14,5 +14,5 @@ CREATE TABLE Board (
     content  varchar(3000) not null,
     writer varchar(20) not null,
     view_cnt int(11) not null,
-    created_at DATE DEFAULT (current_date)
+    created_at datetime NOT NULL DEFAULT current_timestamp()
 );
