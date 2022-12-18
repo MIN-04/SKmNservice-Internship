@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardRequestDto {
-  private Long id;
+public class InsertBoardRequestDto {
   private String title;        // 제목
   private String content;      // 내용
   private String writer;       // 작성자

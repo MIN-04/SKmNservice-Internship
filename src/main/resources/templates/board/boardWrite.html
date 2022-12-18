@@ -10,8 +10,8 @@
                 <!--/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */-->
                 <input type="hidden" id="id" name="id" th:if="${board != null}" th:value="${board.id}" />
                 <!--/* 작성자 */-->
-                <input type="hidden" id="writer" name="writer" th:value="kimji" required/>
-<!--                <input type="hidden" id="writer" name="writer" th:value="${board?.writer}" /> -->
+                <input type="hidden" id="writer" name="writer" th:value="${board?.writer}" required/>
+<!--                <input type="hidden" id="writer" name="writer" th:value="${board?.writer}" required/>-->
 
                 <table class="tb tb_row">
                     <colgroup>
@@ -20,7 +20,7 @@
                     <tbody>
                     <tr>
                         <th scope="row">등록일</th>
-                        <td colspan="3"><input type="text" id="createdDate" name="createdDate" readonly /></td>
+                        <td colspan="3" th:if="${board != null}" th:text="${#temporals.format( row.createdAt, 'yyyy-MM-dd HH:mm' )}"></td>
                     </tr>
 
                     <tr>
@@ -45,16 +45,35 @@
 
 <th:block layout:fragment="script">
     <script th:inline="javascript">
+        window.onload = () => {
+          renderPostInfo();
+        }
 
-            // 게시글 저장(수정)
-            function saveBoard() {
-                const form = document.getElementById('saveForm');
-                const fields = [form.title, form.writer, form.content];
+        // 게시물 저장(수정)
+        function saveBoard() {
+            const form = document.getElementById('saveForm');
+            const fields = [form.title, [[ ${board == null} ]] ? "kimji" : form.writer, form.content];
 
-                document.getElementById('saveBtn').disabled = true;
-                form.action = [[ ${board == null} ]] ? '/board/insertBoard.do' : '/board/updateBoard.do';
-                form.submit();
-            }
+            document.getElementById('saveBtn').disabled = true;
+            form.action = [[ ${board == null} ]] ? '/board/insertBoard.do' : '/board/updateBoard.do';
+            form.submit();
+        }
+
+        // 게시물 상세정보 렌더링
+        function renderPostInfo() {
+          const board = [[ ${board} ]];
+
+          if ( !board ) {
+            return false;
+          }
+
+          const form = document.getElementById('saveForm');
+          const fields = ['id', 'title', 'content', 'writer'];
+
+          fields.forEach(field => {
+            form[field].value = board[field];
+          });
+        }
 
         </script>
 </th:block>

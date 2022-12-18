@@ -45,7 +45,7 @@
                     <td th:text="${(status.size - status.index)}"></td>
                     <td class="tl"><a th:href="@{/board/viewBoard.do( id=${row.id} )}" th:text="${row.title}"></a></td>
                     <td th:text="${row.writer}"></td>
-                    <td th:text="${#temporals.format( row.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>
+                    <td th:text="${#temporals.format( row.createdAt, 'yyyy-MM-dd HH:mm' )}"></td>
                     <td th:text="${row.viewCnt}"></td>
                 </tr>
 

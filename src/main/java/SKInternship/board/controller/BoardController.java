@@ -1,6 +1,7 @@
 package SKInternship.board.controller;
 
-import SKInternship.board.controller.dto.BoardRequestDto;
+import SKInternship.board.controller.dto.InsertBoardRequestDto;
+import SKInternship.board.controller.dto.UpdateBoardRequestDto;
 import SKInternship.board.domain.Board;
 import SKInternship.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -36,40 +37,68 @@ public class BoardController {
   }
 
   /**
-   * 게시판 작성 페이지
-   * @return 게시글 작성 페이지
+   * 게시물 작성 페이지
+   * @return 게시물 작성 페이지
    */
   @GetMapping("/writeBoard.do")
   public String openBoardWrite() {
-    log.info("게시판 작성 페이지");
+    log.info("게시물 작성 페이지");
     return "board/boardWrite";
   }
 
   /**
-   * 게시판 저장
+   * 게시물 저장
    * @param requestDto
    * @return 게시판 목록 페이지로 리디렉션
    */
   @PostMapping("/insertBoard.do")
-  public String insertBoard(BoardRequestDto requestDto) {
-    log.info("게시판 저장");
+  public String insertBoard(InsertBoardRequestDto requestDto) {
+    log.info("게시물 저장");
     boardService.insertBoard(requestDto);
 
     return "redirect:/board/openBoardList.do";
   }
 
   /**
-   * 게시판 상세 조회
+   * 게시물 상세 조회
    * @param id
    * @param model
-   * @return 게시판 상세 조회 페이지
+   * @return 게시물 상세 조회 페이지
    */
   @GetMapping("/viewBoard.do")
   public String viewBoard(@RequestParam Long id, Model model) {
-    log.info("게시판 상세 조회");
+    log.info("게시물 상세 조회");
     Board board = boardService.findById(id);
     model.addAttribute("board", board);
     return "/board/boardDetail";
+  }
+
+
+  /**
+   * 게시물 수정 페이지
+   * @param id
+   * @param model
+   * @return 게시물 수정 페이지
+   */
+  @GetMapping("/viewUpdateBoard.do")
+  public String updateBoard(@RequestParam Long id, Model model) {
+    log.info("게시물 수정 페이지");
+    Board board = boardService.findById(id);
+    model.addAttribute("board", board);
+    return "board/boardWrite";
+  }
+
+  /**
+   * 게시물 수정
+   * @param requestDto
+   * @return 게시판 목록 페이지로 리디렉션
+   */
+  @PostMapping("/updateBoard.do")
+  public String updateBoard(UpdateBoardRequestDto requestDto) {
+    log.info("게시물 수정");
+    boardService.updateBoard(requestDto);
+
+    return "redirect:/board/openBoardList.do";
   }
 
 }
