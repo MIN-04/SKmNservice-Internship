@@ -3,6 +3,7 @@ package SKInternship.board.controller;
 import SKInternship.board.controller.dto.*;
 import SKInternship.board.domain.Board;
 import SKInternship.board.service.BoardService;
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -29,10 +30,12 @@ public class BoardController {
    * @return 게시판 목록
    */
   @GetMapping("/openBoardList.do")
-  public String openBoardList(@ModelAttribute("requestDto") BoardSearchRequestDto requestDto, Model model) {
+  public String openBoardList(@ModelAttribute SearchDto searchDto,
+                              @RequestParam(required = false, defaultValue = "1") int pageNum, Model model) {
     log.info("게시판 목록 조회");
-    PagingResponseDto<BoardResponseDto> response = boardService.findAll(requestDto);
-    model.addAttribute("response", response);
+    PageInfo<Board> boardList = new PageInfo<>(boardService.findAll(searchDto, pageNum), 10);
+    model.addAttribute("boardList", boardList);
+    model.addAttribute("search", searchDto);
     return "board/boardList";
   }
 

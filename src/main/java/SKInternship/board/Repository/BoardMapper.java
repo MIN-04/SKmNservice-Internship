@@ -1,10 +1,10 @@
 package SKInternship.board.Repository;
 
 import SKInternship.board.controller.dto.BoardSearchRequestDto;
+import SKInternship.board.controller.dto.SearchDto;
 import SKInternship.board.domain.Board;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 @Mapper
 public interface BoardMapper {
@@ -38,11 +38,5 @@ public interface BoardMapper {
    * 게시글 리스트 조회
    * @return 게시글 리스트
    */
-  List<Board> findAll(BoardSearchRequestDto requestDto);
-
-  /**
-   * 게시글 수 카운팅
-   * @return 게시글 수
-   */
-  int count(BoardSearchRequestDto requestDto);
+  Page<Board> findAll(SearchDto searchDto);
 }

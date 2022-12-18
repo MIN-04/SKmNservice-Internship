@@ -1,16 +1,15 @@
 package SKInternship.board.service;
 
 import SKInternship.board.Repository.BoardMapper;
-import SKInternship.board.common.Pagination;
-import SKInternship.board.controller.dto.*;
+import SKInternship.board.controller.dto.BoardInsertRequestDto;
+import SKInternship.board.controller.dto.BoardUpdateRequestDto;
+import SKInternship.board.controller.dto.SearchDto;
 import SKInternship.board.domain.Board;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,23 +30,9 @@ public class BoardService {
    * 게시판 목록 조회
    * @return 게시판 목록
    */
-  public PagingResponseDto<BoardResponseDto> findAll(BoardSearchRequestDto requestDto) {
-
-    int count = boardMapper.count(requestDto);
-    if (count < 1) {
-      return new PagingResponseDto<>(Collections.emptyList(), null);
-    }
-
-    Pagination pagination = new Pagination(count, requestDto);
-    requestDto.setPagination(pagination);
-
-    List<Board> list = boardMapper.findAll(requestDto);
-    List<BoardResponseDto> responseDtos = new ArrayList<>();
-    for (Board board : list) {
-      responseDtos.add(new BoardResponseDto(board));
-    }
-    return new PagingResponseDto<>(responseDtos, pagination);
-
+  public Page<Board> findAll(SearchDto searchDto, int pageNum) {
+    PageHelper.startPage(pageNum, 10);
+    return boardMapper.findAll(searchDto);
   }
 
   /**
