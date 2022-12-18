@@ -50,4 +50,12 @@ public class BoardService {
     boardMapper.update(board);
   }
 
+  /**
+   * 게시물 삭제
+   * @param id
+   */
+  public void deleteBoard(Long id) {
+    boardMapper.deleteById(id);
+  }
+
 }

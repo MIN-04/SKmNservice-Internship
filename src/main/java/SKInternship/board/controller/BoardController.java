@@ -55,7 +55,6 @@ public class BoardController {
   public String insertBoard(InsertBoardRequestDto requestDto) {
     log.info("게시물 저장");
     boardService.insertBoard(requestDto);
-
     return "redirect:/board/openBoardList.do";
   }
 
@@ -72,7 +71,6 @@ public class BoardController {
     model.addAttribute("board", board);
     return "/board/boardDetail";
   }
-
 
   /**
    * 게시물 수정 페이지
@@ -97,7 +95,18 @@ public class BoardController {
   public String updateBoard(UpdateBoardRequestDto requestDto) {
     log.info("게시물 수정");
     boardService.updateBoard(requestDto);
+    return "redirect:/board/openBoardList.do";
+  }
 
+  /**
+   * 게시물 삭제
+   * @param id
+   * @return 게시판 목록 페이지로 리디렉션
+   */
+  @PostMapping("/deleteBoard.do")
+  public String deleteBoard(@RequestParam Long id) {
+    log.info("게시물 삭제");
+    boardService.deleteBoard(id);
     return "redirect:/board/openBoardList.do";
   }
 

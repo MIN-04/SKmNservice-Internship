@@ -61,7 +61,8 @@
 
     <!-- 게시글 삭제 -->
     <delete id="deleteById" parameterType="long">
-        DELETE board
+        DELETE
+        FROM board
         WHERE
             id = #{id}
     </delete>
