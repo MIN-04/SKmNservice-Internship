@@ -8,10 +8,10 @@
         <section>
             <form id="saveForm" method="post" autocomplete="off">
                 <!--/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */-->
-                <input type="hidden" id="id" name="id" th:if="${post != null}" th:value="${post.id}" />
+                <input type="hidden" id="id" name="id" th:if="${board != null}" th:value="${board.id}" />
                 <!--/* 작성자 */-->
                 <input type="hidden" id="writer" name="writer" th:value="kimji" required/>
-<!--                <input type="hidden" id="writer" name="writer" th:value="${post?.writer}" /> -->
+<!--                <input type="hidden" id="writer" name="writer" th:value="${board?.writer}" /> -->
 
                 <table class="tb tb_row">
                     <colgroup>
@@ -36,7 +36,7 @@
                 </table>
             </form>
             <p class="btn_set">
-                <button type="button" id="saveBtn" onclick="savePost();" class="btns btn_st3 btn_mid">저장</button>
+                <button type="button" id="saveBtn" onclick="saveBoard();" class="btns btn_st3 btn_mid">저장</button>
                 <a th:href="@{/board/openBoardList.do}" class="btns btn_bdr3 btn_mid">뒤로</a>
             </p>
         </section>
@@ -47,12 +47,12 @@
     <script th:inline="javascript">
 
             // 게시글 저장(수정)
-            function savePost() {
+            function saveBoard() {
                 const form = document.getElementById('saveForm');
                 const fields = [form.title, form.writer, form.content];
 
                 document.getElementById('saveBtn').disabled = true;
-                form.action = [[ ${post == null} ]] ? '/board/new' : '/board/update';
+                form.action = [[ ${board == null} ]] ? '/board/insertBoard.do' : '/board/updateBoard.do';
                 form.submit();
             }
 
