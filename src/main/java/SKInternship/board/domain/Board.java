@@ -1,7 +1,7 @@
 package SKInternship.board.domain;
 
-import SKInternship.board.controller.dto.InsertBoardRequestDto;
-import SKInternship.board.controller.dto.UpdateBoardRequestDto;
+import SKInternship.board.controller.dto.BoardInsertRequestDto;
+import SKInternship.board.controller.dto.BoardUpdateRequestDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,13 +18,13 @@ public class Board {
   private int viewCnt; // 조회수
   private LocalDateTime createdAt; // 생성일
 
-  public Board(InsertBoardRequestDto requestDto) {
+  public Board(BoardInsertRequestDto requestDto) {
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();
     this.writer = requestDto.getWriter();
   }
 
-  public Board(UpdateBoardRequestDto requestDto) {
+  public Board(BoardUpdateRequestDto requestDto) {
     this.id = requestDto.getId();
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();

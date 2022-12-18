@@ -1,17 +1,15 @@
 package SKInternship.board.controller;
 
-import SKInternship.board.controller.dto.InsertBoardRequestDto;
-import SKInternship.board.controller.dto.UpdateBoardRequestDto;
+import SKInternship.board.controller.dto.BoardInsertRequestDto;
+import SKInternship.board.controller.dto.BoardUpdateRequestDto;
+import SKInternship.board.controller.dto.ResponseDto;
 import SKInternship.board.domain.Board;
 import SKInternship.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,12 @@ import java.util.List;
 public class BoardController {
 
   private final BoardService boardService;
+
+  // 사용자에게 메시지를 전달하고, 페이지를 리다이렉트 한다.
+  private String showMessageAndRedirect(ResponseDto responseDto, Model model) {
+    model.addAttribute("params", responseDto);
+    return "common/responseRedirect";
+  }
 
   /**
    * 게시판 목록 조회
@@ -52,10 +56,12 @@ public class BoardController {
    * @return 게시판 목록 페이지로 리디렉션
    */
   @PostMapping("/insertBoard.do")
-  public String insertBoard(InsertBoardRequestDto requestDto) {
+  public String insertBoard(BoardInsertRequestDto requestDto, Model model) {
     log.info("게시물 저장");
     boardService.insertBoard(requestDto);
-    return "redirect:/board/openBoardList.do";
+    ResponseDto responseDto = new ResponseDto(
+        "게시글 생성이 완료되었습니다.", "/board/openBoardList.do", RequestMethod.GET, null);
+    return showMessageAndRedirect(responseDto, model);
   }
 
   /**
@@ -92,10 +98,12 @@ public class BoardController {
    * @return 게시판 목록 페이지로 리디렉션
    */
   @PostMapping("/updateBoard.do")
-  public String updateBoard(UpdateBoardRequestDto requestDto) {
+  public String updateBoard(BoardUpdateRequestDto requestDto, Model model) {
     log.info("게시물 수정");
     boardService.updateBoard(requestDto);
-    return "redirect:/board/openBoardList.do";
+    ResponseDto responseDto = new ResponseDto(
+        "게시글 수정이 완료되었습니다.", "/board/openBoardList.do", RequestMethod.GET, null);
+    return showMessageAndRedirect(responseDto, model);
   }
 
   /**
@@ -104,10 +112,12 @@ public class BoardController {
    * @return 게시판 목록 페이지로 리디렉션
    */
   @PostMapping("/deleteBoard.do")
-  public String deleteBoard(@RequestParam Long id) {
+  public String deleteBoard(@RequestParam Long id, Model model) {
     log.info("게시물 삭제");
     boardService.deleteBoard(id);
-    return "redirect:/board/openBoardList.do";
+    ResponseDto responseDto = new ResponseDto(
+        "게시글 삭제가 완료되었습니다.", "/board/openBoardList.do", RequestMethod.GET, null);
+    return showMessageAndRedirect(responseDto, model);
   }
 
 }

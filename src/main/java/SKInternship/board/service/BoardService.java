@@ -1,8 +1,8 @@
 package SKInternship.board.service;
 
 import SKInternship.board.Repository.BoardMapper;
-import SKInternship.board.controller.dto.InsertBoardRequestDto;
-import SKInternship.board.controller.dto.UpdateBoardRequestDto;
+import SKInternship.board.controller.dto.BoardInsertRequestDto;
+import SKInternship.board.controller.dto.BoardUpdateRequestDto;
 import SKInternship.board.domain.Board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class BoardService {
    * 게시물 등록
    */
   @Transactional
-  public void insertBoard(InsertBoardRequestDto requestDto) {
+  public void insertBoard(BoardInsertRequestDto requestDto) {
     Board board = new Board(requestDto);
     boardMapper.save(board);
   }
@@ -45,7 +45,7 @@ public class BoardService {
    * 게시물 수정
    * @param requestDto
    */
-  public void updateBoard(UpdateBoardRequestDto requestDto) {
+  public void updateBoard(BoardUpdateRequestDto requestDto) {
     Board board = new Board(requestDto);
     boardMapper.update(board);
   }
