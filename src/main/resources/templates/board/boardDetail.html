@@ -18,7 +18,8 @@
                 <tbody>
                 <tr>
                     <th scope="row">등록일</th>
-                    <td th:text="${#temporals.format( board.createdAt, 'yyyy-MM-dd HH:mm' )}"></td>
+                    <td>[[ ${board.createdAt} ]]</td>
+<!--                    <td th:text="${#temporals.format( board.createdAt, 'yyyy-MM-dd HH:mm' )}"></td>-->
                 </tr>
                 <tr>
                     <th scope="row">제목</th>

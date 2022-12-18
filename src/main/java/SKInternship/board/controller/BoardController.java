@@ -1,8 +1,6 @@
 package SKInternship.board.controller;
 
-import SKInternship.board.controller.dto.BoardInsertRequestDto;
-import SKInternship.board.controller.dto.BoardUpdateRequestDto;
-import SKInternship.board.controller.dto.ResponseDto;
+import SKInternship.board.controller.dto.*;
 import SKInternship.board.domain.Board;
 import SKInternship.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -33,10 +29,10 @@ public class BoardController {
    * @return 게시판 목록
    */
   @GetMapping("/openBoardList.do")
-  public String openBoardList(Model model) {
+  public String openBoardList(@ModelAttribute("requestDto") BoardSearchRequestDto requestDto, Model model) {
     log.info("게시판 목록 조회");
-    List<Board> boardList = boardService.findAll();
-    model.addAttribute("boardList", boardList);
+    PagingResponseDto<BoardResponseDto> response = boardService.findAll(requestDto);
+    model.addAttribute("response", response);
     return "board/boardList";
   }
 
@@ -73,8 +69,8 @@ public class BoardController {
   @GetMapping("/viewBoard.do")
   public String viewBoard(@RequestParam Long id, Model model) {
     log.info("게시물 상세 조회");
-    Board board = boardService.findById(id);
-    model.addAttribute("board", board);
+    BoardResponseDto responseDto = new BoardResponseDto(boardService.findById(id));
+    model.addAttribute("board", responseDto);
     return "/board/boardDetail";
   }
 
@@ -87,8 +83,8 @@ public class BoardController {
   @GetMapping("/viewUpdateBoard.do")
   public String updateBoard(@RequestParam Long id, Model model) {
     log.info("게시물 수정 페이지");
-    Board board = boardService.findById(id);
-    model.addAttribute("board", board);
+    BoardResponseDto responseDto = new BoardResponseDto(boardService.findById(id));
+    model.addAttribute("board", responseDto);
     return "board/boardWrite";
   }
 

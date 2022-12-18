@@ -69,13 +69,21 @@
 
 
     <!-- 게시글 리스트 조회 -->
-    <select id="findAll" resultType="Board">
+    <select id="findAll" parameterType="SKInternship.board.controller.dto.BoardSearchRequestDto" resultType="Board">
         SELECT
             <include refid="boardColumns" />
         FROM
             board
         ORDER BY
             created_at DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
     </select>
 
+    <!-- 게시글 수 카운팅 -->
+    <select id="count" parameterType="SKInternship.board.controller.dto.BoardSearchRequestDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            board
+    </select>
 </mapper>
