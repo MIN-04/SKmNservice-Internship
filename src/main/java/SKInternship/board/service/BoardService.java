@@ -16,7 +16,7 @@ public class BoardService {
   private final BoardMapper boardMapper;
 
   /**
-   * 게시글 등록
+   * 게시판 등록
    */
   @Transactional
   public void insertBoard(BoardRequestDto requestDto) {
@@ -25,11 +25,19 @@ public class BoardService {
   }
 
   /**
-   * 게시글 목록 조회
-   * @return 게시글 목록
+   * 게시판 목록 조회
+   * @return 게시판 목록
    */
   public List<Board> findAll() {
     return boardMapper.findAll();
+  }
+
+  /**
+   * 게시판 상세 조회
+   * @return 게시판 상세
+   */
+  public Board findById(Long id) {
+    return boardMapper.findById(id);
   }
 
 }

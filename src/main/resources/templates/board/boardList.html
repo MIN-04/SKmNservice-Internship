@@ -43,7 +43,7 @@
                 <tbody>
                 <tr th:if="${not #lists.isEmpty( boardList )}" th:each="row, status : ${boardList}">
                     <td th:text="${(status.size - status.index)}"></td>
-                    <td class="tl"><a th:href="@{/board/view.do( id=${row.id} )}" th:text="${row.title}"></a></td>
+                    <td class="tl"><a th:href="@{/board/viewBoard.do( id=${row.id} )}" th:text="${row.title}"></a></td>
                     <td th:text="${row.writer}"></td>
                     <td th:text="${#temporals.format( row.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>
                     <td th:text="${row.viewCnt}"></td>
